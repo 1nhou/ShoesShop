@@ -49,6 +49,7 @@ function Detail(props){
     let find = props.shoes.find(e =>{return e.id == id})
     let [tap, setTap] = useState(0)
 
+
     return(
         <div className={`container start ${fade1}`}>
             {
@@ -72,7 +73,8 @@ function Detail(props){
                         dispatch(addProduct(product))
                         console.log(state.cart)
                     }}>주문하기</button> 
-                    <Link to="/cart"><button >확인용 버튼</button></Link>
+
+                    <Link to="/cart"><button className="btn btn-danger" >장바구니</button></Link>
                 </div>
             </div>
 

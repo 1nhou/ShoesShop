@@ -1,17 +1,21 @@
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import {changeName, changeAge} from './../store/userSlice'
+import {changeAge} from './../store/userSlice'
 import {changeCount,delProduct} from './../store'
+import { useState } from 'react'
+
 
 function Cart(){
 
      let state = useSelector((state)=>{ return state })
      let dispatch = useDispatch()
+     let [count, setCount] = useState(0)
 
      //store.js에 요청 보내주는 함수
 
     return(
         <div>
+            <button onClick={()=>{setCount(count+1)}}>+</button>
             {state.user.name} {state.user.age}세의 장바구니
             <button onClick={()=>{dispatch(changeAge(10))}}>버튼이셈</button>
             <Table>

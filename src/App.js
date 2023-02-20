@@ -4,17 +4,23 @@ import { Navbar,Container,Nav } from 'react-bootstrap';
 import { createContext, useEffect, useState } from 'react';
 import data from './data'
 import ShoeList from './component/list';
-import { Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
+import { Routes, Route, useNavigate,} from 'react-router-dom'
 import Detail from './component/detail';
 import axios from 'axios';
 import Cart from './component/Cart';
+
+
+
 
 export let Context1 = createContext()
 
 
 function App() {
 
+  //현재 dummy데이터로 진행하고있기때문에, 새로고침시 localstorage 저장기록을 강제로 없애고있음.
   useEffect(()=>{
+    // if(localStorage.getItem('watched') === null)
+    // {localStorage.setItem('watched',JSON.stringify( [] ))}
     localStorage.setItem('watched',JSON.stringify( [] ))
   },[])
 
@@ -29,17 +35,32 @@ function App() {
   let [stock] = useState([10,11,12])
   let navigate = useNavigate()
 
+  // let result = useQuery('작명',()=>
+  //   axios.get('https://codingapple1.github.io/userdata.json')
+  //   .then((a)=>{ return a.data })
+  // )
+  // const {isLoading, error, data} = useQuery('result', ()=>{
+  //   axios.get('https://codingapple1.github.io/userdata.json').then((res)=>{res.json()})
+  //   console.log(data)
+  // })
+
+
+  // console.log(result)
+
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
+        
         <Container>
-          <Navbar.Brand href="#home">Shoes Shop</Navbar.Brand>
+          <Navbar.Brand>Shoes Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/')}}>홈</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart')}}>장바구니</Nav.Link>
           </Nav>
         </Container>
+      
       </Navbar>
+      
 
       <Routes>
         <Route path='/' element={<ShoeList shoes={shoes} />}/>
@@ -63,7 +84,7 @@ function App() {
         axios.get('https://codingapple1.github.io/shop/data2.json')
         .then((data)=>{
           let copy = [...shoes]
-          data.data.map((e)=>{copy.push(e)})
+          data.data.map((e)=>{return copy.push(e)})
           setShoes(copy)
         })
         .catch(()=>{
@@ -79,15 +100,17 @@ function App() {
         .catch(()=>{
           console.log('실패함ㅅㄱ')
         })
-      } if(count >= 3){
+      } if(count >= 2){
         alert('더이상 상품없셈 그만누르셈')
       }
       }}>더보기</button>
-
-      
     </div>
   );
+
+
+  
 }
+
 
 // function Event(){
 //   return (
